@@ -1,0 +1,84 @@
+﻿<Page x:Class="EducPractVer2._00.Admin.FearLevelPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EducPractVer2._00.Admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Title="FearLevel">
+    <Grid Background="#FFF1D7B9">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.3*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="30*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Grid.Row="0" Content="Данные для заполнения" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF462013" FontWeight="Bold" FontFamily="Century Gothic"/>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <CheckBox
+          x:Name="MaterialDesignOutlinedTextBoxTextCountComboBox"
+          Content="View Text Input Count" IsChecked="True" Visibility="Hidden"/>
+                <TextBox x:Name="PositionNameBox" 
+          VerticalAlignment="Top"
+          materialDesign:HintAssist.Hint="Уровень страха"
+          materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
+          MaxLength="50"
+          Style="{StaticResource MaterialDesignOutlinedTextBox}"
+          TextWrapping="Wrap"
+          VerticalScrollBarVisibility="Auto" FontFamily="Century Gothic" FontSize="18" Foreground="#FF462013" BorderBrush="#FF462013" />
+            </StackPanel>
+            <Grid Grid.Row="4" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="12*"></ColumnDefinition>
+                    <ColumnDefinition Width="12*"></ColumnDefinition>
+                    <ColumnDefinition Width="12*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AddButton"  Grid.Column="1"
+              Height="45" 
+            Content="ДОБАВИТЬ"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}" Click="AddButton_Click" FontFamily="Century Gothic" FontWeight="Bold"/>
+                <Button x:Name="UpdateButton"  Grid.Column="2"
+              Height="45"
+            Content="ИЗМЕНИТЬ"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}" Click="UpdateButton_Click" FontFamily="Century Gothic" FontWeight="Bold"/>
+                <Button x:Name="DeleteButton"  Grid.Column="3"
+              Height="45"
+            Content="УДАЛИТЬ"
+            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+            Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}" Click="DeleteButton_Click" FontFamily="Century Gothic" FontWeight="Bold"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <DataGrid Grid.Row="0"  IsReadOnly="True" x:Name="PositionsGrid" Foreground="#FF462013" FontFamily="Century Gothic" FontSize="18" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="PositionsGrid_SelectionChanged"
+                AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding fear_level_id}" Header="ID"/>
+                    <DataGridTextColumn Binding="{Binding fear}" Header="Уровень страха"/>
+                </DataGrid.Columns>
+                <DataGrid.Background>
+                    <SolidColorBrush Color="#FF462013" Opacity="0.5"/>
+                </DataGrid.Background>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище AmusementParkDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attractions">
+          <Key>
+            <PropertyRef Name="attraction_id" />
+          </Key>
+          <Property Name="attraction_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="attraction_name" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="fear_level_id" Type="int" />
+        </EntityType>
+        <EntityType Name="AttractionType">
+          <Key>
+            <PropertyRef Name="attraction_type_id" />
+          </Key>
+          <Property Name="attraction_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="attraction_type_name" Type="varchar" MaxLength="50" />
+          <Property Name="attraction_id" Type="int" />
+        </EntityType>
+        <EntityType Name="AuthorizationData">
+          <Key>
+            <PropertyRef Name="authorization_id" />
+          </Key>
+          <Property Name="authorization_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="logins" Type="varchar" MaxLength="50" />
+          <Property Name="passwords" Type="varchar" MaxLength="50" />
+          <Property Name="role_id" Type="int" />
+        </EntityType>
+        <EntityType Name="CashierRoles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Cashiers">
+          <Key>
+            <PropertyRef Name="cashier_id" />
+          </Key>
+          <Property Name="cashier_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" />
+          <Property Name="register_number_id" Type="int" />
+          <Property Name="role_id" Type="int" />
+        </EntityType>
+        <EntityType Name="CashRegisterNumbers">
+          <Key>
+            <PropertyRef Name="register_number_id" />
+          </Key>
+          <Property Name="register_number_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="register_number" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Discounts">
+          <Key>
+            <PropertyRef Name="discount_id" />
+          </Key>
+          <Property Name="discount_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="discount_size" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="FearLevels">
+          <Key>
+            <PropertyRef Name="fear_level_id" />
+          </Key>
+          <Property Name="fear_level_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fear" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purchase_date" Type="date" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="cashier_id" Type="int" />
+          <Property Name="discount_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="receipt_id" />
+          </Key>
+          <Property Name="receipt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="attraction_id" Type="int" />
+          <Property Name="order_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Attractio__attra__72C60C4A">
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="0..1" />
+          <End Role="AttractionType" Type="Self.AttractionType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attractions">
+              <PropertyRef Name="attraction_id" />
+            </Principal>
+            <Dependent Role="AttractionType">
+              <PropertyRef Name="attraction_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__fear___6FE99F9F">
+          <End Role="FearLevels" Type="Self.FearLevels" Multiplicity="0..1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FearLevels">
+              <PropertyRef Name="fear_level_id" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="fear_level_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Authoriza__role___75A278F5">
+          <End Role="CashierRoles" Type="Self.CashierRoles" Multiplicity="0..1" />
+          <End Role="AuthorizationData" Type="Self.AuthorizationData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashierRoles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="AuthorizationData">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cashiers__regist__787EE5A0">
+          <End Role="CashRegisterNumbers" Type="Self.CashRegisterNumbers" Multiplicity="0..1" />
+          <End Role="Cashiers" Type="Self.Cashiers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashRegisterNumbers">
+              <PropertyRef Name="register_number_id" />
+            </Principal>
+            <Dependent Role="Cashiers">
+              <PropertyRef Name="register_number_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cashiers__role_i__797309D9">
+          <End Role="CashierRoles" Type="Self.CashierRoles" Multiplicity="0..1" />
+          <End Role="Cashiers" Type="Self.Cashiers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashierRoles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Cashiers">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__cashier___7C4F7684">
+          <End Role="Cashiers" Type="Self.Cashiers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cashiers">
+              <PropertyRef Name="cashier_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="cashier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__discount__7D439ABD">
+          <End Role="Discounts" Type="Self.Discounts" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discounts">
+              <PropertyRef Name="discount_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="discount_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receipt__attract__00200768">
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="0..1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attractions">
+              <PropertyRef Name="attraction_id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="attraction_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receipt__order_i__01142BA1">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AmusementParkDBModelContainer">
+          <EntitySet Name="Attractions" EntityType="Self.Attractions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttractionType" EntityType="Self.AttractionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorizationData" EntityType="Self.AuthorizationData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CashierRoles" EntityType="Self.CashierRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cashiers" EntityType="Self.Cashiers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CashRegisterNumbers" EntityType="Self.CashRegisterNumbers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discounts" EntityType="Self.Discounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FearLevels" EntityType="Self.FearLevels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Attractio__attra__72C60C4A" Association="Self.FK__Attractio__attra__72C60C4A">
+            <End Role="Attractions" EntitySet="Attractions" />
+            <End Role="AttractionType" EntitySet="AttractionType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__fear___6FE99F9F" Association="Self.FK__Attractio__fear___6FE99F9F">
+            <End Role="FearLevels" EntitySet="FearLevels" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Authoriza__role___75A278F5" Association="Self.FK__Authoriza__role___75A278F5">
+            <End Role="CashierRoles" EntitySet="CashierRoles" />
+            <End Role="AuthorizationData" EntitySet="AuthorizationData" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cashiers__regist__787EE5A0" Association="Self.FK__Cashiers__regist__787EE5A0">
+            <End Role="CashRegisterNumbers" EntitySet="CashRegisterNumbers" />
+            <End Role="Cashiers" EntitySet="Cashiers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cashiers__role_i__797309D9" Association="Self.FK__Cashiers__role_i__797309D9">
+            <End Role="CashierRoles" EntitySet="CashierRoles" />
+            <End Role="Cashiers" EntitySet="Cashiers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__cashier___7C4F7684" Association="Self.FK__Orders__cashier___7C4F7684">
+            <End Role="Cashiers" EntitySet="Cashiers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__discount__7D439ABD" Association="Self.FK__Orders__discount__7D439ABD">
+            <End Role="Discounts" EntitySet="Discounts" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receipt__attract__00200768" Association="Self.FK__Receipt__attract__00200768">
+            <End Role="Attractions" EntitySet="Attractions" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receipt__order_i__01142BA1" Association="Self.FK__Receipt__order_i__01142BA1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AmusementParkDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Attractions">
+          <Key>
+            <PropertyRef Name="attraction_id" />
+          </Key>
+          <Property Name="attraction_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="attraction_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="fear_level_id" Type="Int32" />
+          <NavigationProperty Name="AttractionType" Relationship="Self.FK__Attractio__attra__72C60C4A" FromRole="Attractions" ToRole="AttractionType" />
+          <NavigationProperty Name="FearLevels" Relationship="Self.FK__Attractio__fear___6FE99F9F" FromRole="Attractions" ToRole="FearLevels" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK__Receipt__attract__00200768" FromRole="Attractions" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="AttractionType">
+          <Key>
+            <PropertyRef Name="attraction_type_id" />
+          </Key>
+          <Property Name="attraction_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="attraction_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="attraction_id" Type="Int32" />
+          <NavigationProperty Name="Attractions" Relationship="Self.FK__Attractio__attra__72C60C4A" FromRole="AttractionType" ToRole="Attractions" />
+        </EntityType>
+        <EntityType Name="AuthorizationData">
+          <Key>
+            <PropertyRef Name="authorization_id" />
+          </Key>
+          <Property Name="authorization_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logins" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="passwords" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="CashierRoles" Relationship="Self.FK__Authoriza__role___75A278F5" FromRole="AuthorizationData" ToRole="CashierRoles" />
+        </EntityType>
+        <EntityType Name="CashierRoles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AuthorizationData" Relationship="Self.FK__Authoriza__role___75A278F5" FromRole="CashierRoles" ToRole="AuthorizationData" />
+          <NavigationProperty Name="Cashiers" Relationship="Self.FK__Cashiers__role_i__797309D9" FromRole="CashierRoles" ToRole="Cashiers" />
+        </EntityType>
+        <EntityType Name="Cashiers">
+          <Key>
+            <PropertyRef Name="cashier_id" />
+          </Key>
+          <Property Name="cashier_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="register_number_id" Type="Int32" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="CashierRoles" Relationship="Self.FK__Cashiers__role_i__797309D9" FromRole="Cashiers" ToRole="CashierRoles" />
+          <NavigationProperty Name="CashRegisterNumbers" Relationship="Self.FK__Cashiers__regist__787EE5A0" FromRole="Cashiers" ToRole="CashRegisterNumbers" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__cashier___7C4F7684" FromRole="Cashiers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="CashRegisterNumbers">
+          <Key>
+            <PropertyRef Name="register_number_id" />
+          </Key>
+          <Property Name="register_number_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="register_number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cashiers" Relationship="Self.FK__Cashiers__regist__787EE5A0" FromRole="CashRegisterNumbers" ToRole="Cashiers" />
+        </EntityType>
+        <EntityType Name="Discounts">
+          <Key>
+            <PropertyRef Name="discount_id" />
+          </Key>
+          <Property Name="discount_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="discount_size" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__discount__7D439ABD" FromRole="Discounts" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="FearLevels">
+          <Key>
+            <PropertyRef Name="fear_level_id" />
+          </Key>
+          <Property Name="fear_level_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Attractions" Relationship="Self.FK__Attractio__fear___6FE99F9F" FromRole="FearLevels" ToRole="Attractions" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purchase_date" Type="DateTime" Precision="0" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="cashier_id" Type="Int32" />
+          <Property Name="discount_id" Type="Int32" />
+          <NavigationProperty Name="Cashiers" Relationship="Self.FK__Orders__cashier___7C4F7684" FromRole="Orders" ToRole="Cashiers" />
+          <NavigationProperty Name="Discounts" Relationship="Self.FK__Orders__discount__7D439ABD" FromRole="Orders" ToRole="Discounts" />
+          <NavigationProperty Name="Receipt" Relationship="Self.FK__Receipt__order_i__01142BA1" FromRole="Orders" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="receipt_id" />
+          </Key>
+          <Property Name="receipt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="attraction_id" Type="Int32" />
+          <Property Name="order_id" Type="Int32" />
+          <NavigationProperty Name="Attractions" Relationship="Self.FK__Receipt__attract__00200768" FromRole="Receipt" ToRole="Attractions" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Receipt__order_i__01142BA1" FromRole="Receipt" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK__Attractio__attra__72C60C4A">
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="0..1" />
+          <End Role="AttractionType" Type="Self.AttractionType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attractions">
+              <PropertyRef Name="attraction_id" />
+            </Principal>
+            <Dependent Role="AttractionType">
+              <PropertyRef Name="attraction_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__fear___6FE99F9F">
+          <End Role="FearLevels" Type="Self.FearLevels" Multiplicity="0..1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FearLevels">
+              <PropertyRef Name="fear_level_id" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="fear_level_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receipt__attract__00200768">
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="0..1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attractions">
+              <PropertyRef Name="attraction_id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="attraction_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Authoriza__role___75A278F5">
+          <End Role="CashierRoles" Type="Self.CashierRoles" Multiplicity="0..1" />
+          <End Role="AuthorizationData" Type="Self.AuthorizationData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashierRoles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="AuthorizationData">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cashiers__role_i__797309D9">
+          <End Role="CashierRoles" Type="Self.CashierRoles" Multiplicity="0..1" />
+          <End Role="Cashiers" Type="Self.Cashiers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashierRoles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Cashiers">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cashiers__regist__787EE5A0">
+          <End Role="CashRegisterNumbers" Type="Self.CashRegisterNumbers" Multiplicity="0..1" />
+          <End Role="Cashiers" Type="Self.Cashiers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashRegisterNumbers">
+              <PropertyRef Name="register_number_id" />
+            </Principal>
+            <Dependent Role="Cashiers">
+              <PropertyRef Name="register_number_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__cashier___7C4F7684">
+          <End Role="Cashiers" Type="Self.Cashiers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cashiers">
+              <PropertyRef Name="cashier_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="cashier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__discount__7D439ABD">
+          <End Role="Discounts" Type="Self.Discounts" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discounts">
+              <PropertyRef Name="discount_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="discount_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Receipt__order_i__01142BA1">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AmusementParkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Attractions" EntityType="Self.Attractions" />
+          <EntitySet Name="AttractionType" EntityType="Self.AttractionType" />
+          <EntitySet Name="AuthorizationData" EntityType="Self.AuthorizationData" />
+          <EntitySet Name="CashierRoles" EntityType="Self.CashierRoles" />
+          <EntitySet Name="Cashiers" EntityType="Self.Cashiers" />
+          <EntitySet Name="CashRegisterNumbers" EntityType="Self.CashRegisterNumbers" />
+          <EntitySet Name="Discounts" EntityType="Self.Discounts" />
+          <EntitySet Name="FearLevels" EntityType="Self.FearLevels" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" />
+          <AssociationSet Name="FK__Attractio__attra__72C60C4A" Association="Self.FK__Attractio__attra__72C60C4A">
+            <End Role="Attractions" EntitySet="Attractions" />
+            <End Role="AttractionType" EntitySet="AttractionType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__fear___6FE99F9F" Association="Self.FK__Attractio__fear___6FE99F9F">
+            <End Role="FearLevels" EntitySet="FearLevels" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receipt__attract__00200768" Association="Self.FK__Receipt__attract__00200768">
+            <End Role="Attractions" EntitySet="Attractions" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Authoriza__role___75A278F5" Association="Self.FK__Authoriza__role___75A278F5">
+            <End Role="CashierRoles" EntitySet="CashierRoles" />
+            <End Role="AuthorizationData" EntitySet="AuthorizationData" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cashiers__role_i__797309D9" Association="Self.FK__Cashiers__role_i__797309D9">
+            <End Role="CashierRoles" EntitySet="CashierRoles" />
+            <End Role="Cashiers" EntitySet="Cashiers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cashiers__regist__787EE5A0" Association="Self.FK__Cashiers__regist__787EE5A0">
+            <End Role="CashRegisterNumbers" EntitySet="CashRegisterNumbers" />
+            <End Role="Cashiers" EntitySet="Cashiers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__cashier___7C4F7684" Association="Self.FK__Orders__cashier___7C4F7684">
+            <End Role="Cashiers" EntitySet="Cashiers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__discount__7D439ABD" Association="Self.FK__Orders__discount__7D439ABD">
+            <End Role="Discounts" EntitySet="Discounts" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Receipt__order_i__01142BA1" Association="Self.FK__Receipt__order_i__01142BA1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AmusementParkDBModelContainer" CdmEntityContainer="AmusementParkEntities">
+          <EntitySetMapping Name="Attractions">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.Attractions">
+              <MappingFragment StoreEntitySet="Attractions">
+                <ScalarProperty Name="attraction_id" ColumnName="attraction_id" />
+                <ScalarProperty Name="attraction_name" ColumnName="attraction_name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="fear_level_id" ColumnName="fear_level_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttractionType">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.AttractionType">
+              <MappingFragment StoreEntitySet="AttractionType">
+                <ScalarProperty Name="attraction_type_id" ColumnName="attraction_type_id" />
+                <ScalarProperty Name="attraction_type_name" ColumnName="attraction_type_name" />
+                <ScalarProperty Name="attraction_id" ColumnName="attraction_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorizationData">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.AuthorizationData">
+              <MappingFragment StoreEntitySet="AuthorizationData">
+                <ScalarProperty Name="authorization_id" ColumnName="authorization_id" />
+                <ScalarProperty Name="logins" ColumnName="logins" />
+                <ScalarProperty Name="passwords" ColumnName="passwords" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashierRoles">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.CashierRoles">
+              <MappingFragment StoreEntitySet="CashierRoles">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cashiers">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.Cashiers">
+              <MappingFragment StoreEntitySet="Cashiers">
+                <ScalarProperty Name="cashier_id" ColumnName="cashier_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="register_number_id" ColumnName="register_number_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashRegisterNumbers">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.CashRegisterNumbers">
+              <MappingFragment StoreEntitySet="CashRegisterNumbers">
+                <ScalarProperty Name="register_number_id" ColumnName="register_number_id" />
+                <ScalarProperty Name="register_number" ColumnName="register_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discounts">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.Discounts">
+              <MappingFragment StoreEntitySet="Discounts">
+                <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+                <ScalarProperty Name="discount_size" ColumnName="discount_size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FearLevels">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.FearLevels">
+              <MappingFragment StoreEntitySet="FearLevels">
+                <ScalarProperty Name="fear_level_id" ColumnName="fear_level_id" />
+                <ScalarProperty Name="fear" ColumnName="fear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="purchase_date" ColumnName="purchase_date" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="cashier_id" ColumnName="cashier_id" />
+                <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipt">
+            <EntityTypeMapping TypeName="AmusementParkDBModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="attraction_id" ColumnName="attraction_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

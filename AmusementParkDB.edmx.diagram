@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="28692bb78f974fe6a42987359a8a5ad9" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="AmusementParkDBModel.Attractions" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.AttractionType" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.AuthorizationData" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.CashierRoles" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.Cashiers" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.CashRegisterNumbers" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.Discounts" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.FearLevels" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.Orders" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AmusementParkDBModel.Receipt" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Attractio__attra__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Attractio__fear___6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Receipt__attract__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Authoriza__role___75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Cashiers__role_i__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Cashiers__regist__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Orders__cashier___7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Orders__discount__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="AmusementParkDBModel.FK__Receipt__order_i__01142BA1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
